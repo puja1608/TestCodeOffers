@@ -93,7 +93,7 @@ public class ApplyDiscount {
 	    }
 
 	 
-	 @GetMapping("/maximizeDiscount")
+	 @GetMapping("/maximizeDiscount")   //for testing only
 	    public DiscountResponse maximizeDiscount1() {
 	        
 	        
