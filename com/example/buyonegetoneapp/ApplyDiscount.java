@@ -15,38 +15,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApplyDiscount {
 	
 	 @PostMapping("/maximizeDiscountOffer1")
-	    public DiscountResponse maximizeDiscountOffer1(@RequestBody List<Integer> priceList) {
-	        Collections.sort(priceList, Collections.reverseOrder()); // Sort prices in descending order
-	        List<Integer> discountedItems = new ArrayList<>();
-	        List<Integer> payableItems = new ArrayList<>();
-	        boolean[] used = new boolean[priceList.size()];
+	 public DiscountResponse maximizeDiscountOffer1(@RequestBody List<Integer> productPrices) {
+	 Collections.sort(productPrices, Collections.reverseOrder());
 
-	        for (int i = 0; i < priceList.size(); i++) {
-	            if (!used[i]) {
-	                discountedItems.add(priceList.get(i));
-	                
-	                boolean foundPair = false;
-	                
-	                for (int j = i + 1; j < priceList.size(); j++) {
-	                    if (!used[j] && priceList.get(j) < priceList.get(i)) {
-	                        discountedItems.add(priceList.get(j));
-	                        payableItems.add(priceList.get(i));
-	                        used[j] = true;
-	                        foundPair = true;
-	                        break;
-	                    }
-	                }
-	                if (!foundPair) {
-	                    payableItems.add(priceList.get(i));
-	                }
-	            }
-	        }
-	        
-	        DiscountResponse response = new DiscountResponse();
-	        response.setDiscountedItems(discountedItems);
-	        response.setPayableItems(payableItems);
-	        return response;
-	 }
+          List<Integer> discountedItems = new ArrayList<>();
+          List<Integer> payableItems = new ArrayList<>();
+
+        for (int i = 0; i < productPrices.size(); i++) {
+             if (i + 1 < productPrices.size()) {
+                 discountedItems.add(productPrices.get(i + 1));
+                payableItems.add(productPrices.get(i));
+
+                 i++;
+            }
+        }
+
+        return new DiscountResponse(discountedItems, payableItems);
+    }
+}
 	 
 	 @PostMapping("/maximizeDiscountOffer2")
 	    public DiscountResponse maximizeDiscountOffer2(@RequestBody List<Integer> priceList) {
