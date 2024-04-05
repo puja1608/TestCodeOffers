@@ -16,12 +16,12 @@ public class ApplyDiscount {
 	
 	 @PostMapping("/maximizeDiscountOffer1")
 	 public DiscountResponse maximizeDiscountOffer1(@RequestBody List<Integer> productPrices) {
-	 Collections.sort(productPrices, Collections.reverseOrder());
-
-          List<Integer> discountedItems = new ArrayList<>();
+		 
+	  Collections.sort(productPrices, Collections.reverseOrder());
+	  List<Integer> discountedItems = new ArrayList<>();
           List<Integer> payableItems = new ArrayList<>();
 
-        for (int i = 0; i < productPrices.size(); i++) {
+          for (int i = 0; i < productPrices.size(); i++) {
              if (i + 1 < productPrices.size()) {
                  discountedItems.add(productPrices.get(i + 1));
                 payableItems.add(productPrices.get(i));
@@ -32,7 +32,7 @@ public class ApplyDiscount {
 
         return new DiscountResponse(discountedItems, payableItems);
     }
-}
+
 	 
 	 @PostMapping("/maximizeDiscountOffer2")
 	    public DiscountResponse maximizeDiscountOffer2(@RequestBody List<Integer> priceList) {
